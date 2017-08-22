@@ -29,7 +29,7 @@ $ apic-ops
     help [cmd]                   display help for [cmd]
 ```
 
-### Example useage
+### Example usage
 #### Login to specified apiconnect insance
 
 ```
@@ -84,6 +84,6 @@ apiconnect is not added as a dependency. IT is assumed that you have already ins
 
 - Clone the repo
 - cd to the root folder
-- run `sudo npm intall -g`
-- run `sudo npm link`
+- run `npm intall -g`
+- run `npm link`
 
