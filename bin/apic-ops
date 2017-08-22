@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var shelljs = require('shelljs');
+var nyaml = require('node-yaml');
+var program = require('commander');
+var fs = require('fs');
+var path = require('path');
+
+
+// Parse parameters
+program
+  .version('0.0.1')
+  .description('APIC ops tool')
+  .command('configure-folder [folder]', 'configure properties for files in the folder').alias('d')
+  .command('configure-file [file]', 'configure properties of the file').alias('f')
+  .command('login', 'login to api connect server').alias('l')
+  .command('publish [product]', 'publish the product').alias('p')
+  .parse(process.argv);
+

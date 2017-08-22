@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+'use strict';
+var shelljs = require('shelljs');
+var nyaml = require('node-yaml');
+var program = require('commander');
+var fs = require('fs');
+var path = require('path');
+var re = require('../lib/reader');
+
+program
+  .option('-c, --config [config] <required>', 'Config file ', "Config file is required")
+  .parse(process.argv);
+
+function login_with_config(config) {
+    var cmd = 'apic login ' + ' --username ' + config.username + ' --password ' + config.password + ' --server ' + config.server;
+    console.log("Logging into " + config.server + "...");
+    shelljs.exec(cmd);
+}
+
+var conf_file = path.resolve(program.config);
+re
+  .read(conf_file)
+  .then((data) => login_with_config(data) )
+  .then(() => { console.error("Done!") })
+  .catch((e) => { console.log(e) });

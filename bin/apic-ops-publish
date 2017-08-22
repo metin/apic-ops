@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+'use strict';
+var shelljs = require('shelljs');
+var nyaml = require('node-yaml');
+var program = require('commander');
+var fs = require('fs');
+var path = require('path');
+var re = require('../lib/reader');
+
+program
+  .option('-c, --config [config] <required>', 'Config file ', "Config file is required")
+  .parse(process.argv);
+
+function publish_with_config(config, product_file) {
+    var cmd = 'apic products:publish ' + product_file + ' --organization ' + config.organization + ' --server ' + config.server + ' --catalog ' + config.catalog;
+    console.log(cmd);
+    shelljs.exec(cmd);
+}
+
+var conf_file = path.resolve(program.config);
+var product = path.resolve(program.args[0]);
+
+re
+  .read(conf_file)
+  .then((data) => publish_with_config(data, product) )
+  .then(() => { console.error("Done!") })
+  .catch((e) => { console.log(e) });

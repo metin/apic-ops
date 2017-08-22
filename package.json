@@ -1,0 +1,28 @@
+{
+   "name": "apic-ops",
+   "version": "1.0.0",
+   "description": "API Connect Deployer",
+   "main": "apic-ops",
+   "bin":{
+    "apic-ops":"./bin/apic-ops"
+   },
+   "scripts": {
+     "test": "test"
+    },
+   "author": "Metin Yorulmaz",
+   "license": "ISC",
+   "dependencies": {
+   	 "commander": "2.11.0",
+     "node-yaml": "3.1.0",
+     "shelljs": "0.7.5",
+     "fs": "0.0.2",
+     "path": "0.12.7"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+http://gitlab.softtech/api-management/apic-deployer.git"
+   },
+  "bugs": {
+    "url": "https://gitlab.softtech/api-management/apic-deployer/issues"
+  }
+}

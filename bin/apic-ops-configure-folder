@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+'use strict';
+var shelljs = require('shelljs');
+var nyaml = require('node-yaml');
+var program = require('commander');
+var fs = require('fs');
+var path = require('path');
+var re = require('../lib/reader');
+var co = require('../lib/configurator');
+var rw = require('../lib/rewriter');
+
+program
+  .option('-c, --config [config] <required>', 'Config file ', "Config file is required")
+  .parse(process.argv);
+
+
+var folder = path.resolve(program.args[0]);
+var conf = path.resolve(program.config);
+
+
+console.log("Configuring ymls in " + folder);
+
+fs.readdir(folder, (err, files) => {
+  if (err) {
+      throw err;
+  }
+
+  files
+    .map(file => { return path.join(folder, file) })
+    .filter(file => { return fs.statSync(file).isFile() })
+    .forEach(file => {
+      re.read(file)
+        .then(ctnt => { return co.configure(re.readSync(conf), ctnt) })
+        .then(cfgd => rw.rewrite(cfgd, file))
+        .catch(e => console.log(e));
+
+  });
+});
+
+
